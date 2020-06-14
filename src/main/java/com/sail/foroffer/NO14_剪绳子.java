@@ -85,6 +85,7 @@ public class NO14_剪绳子 {
     }
 
     public static int cuttingRope(int n) {
+        //整根绳子必须剪切一次
         if(n<=1){
             return 0;
         }
@@ -98,6 +99,7 @@ public class NO14_剪绳子 {
     }
 
     public static int func(int n){
+        //绳子中段，可以选择不剪，数值更多
         if(n==1){
             return 1;
         }
