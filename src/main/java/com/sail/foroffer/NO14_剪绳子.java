@@ -77,5 +77,41 @@ public class NO14_剪绳子 {
 
         System.out.println("plus["+tmpN+"]:"+res*plus[N]);
 
+        /**
+         * 递归方式计算，与动规思路相同
+         */
+        int result3 = cuttingRope(N);
+        System.out.println(result3);
+    }
+
+    public static int cuttingRope(int n) {
+        if(n<=1){
+            return 0;
+        }
+        if(n==2){
+            return 1;
+        }
+        if(n==3){
+            return 2;
+        }
+        return func(n);
+    }
+
+    public static int func(int n){
+        if(n==1){
+            return 1;
+        }
+        if(n==2){
+            return 2;
+        }
+        if(n==3){
+            return 3;
+        }
+
+        int max = 0;
+        for(int i=1;i<=n/2;i++){
+            max = Math.max(max,func(i)*func(n-i));
+        }
+        return max;
     }
 }
