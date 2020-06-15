@@ -26,7 +26,7 @@ public class NO19_正则表达式的匹配 {
     }
 
     /**
-     * 递归思路
+     * 第一种递归思路
      * @param ls
      * @param lp
      * @param match
@@ -86,6 +86,56 @@ public class NO19_正则表达式的匹配 {
         /**
          * 对于字符串与模式串相同或模式串为.的情况就同时后移一位
          */
+        if(lp<pattern.length()&&ls<match.length()&&pattern.charAt(lp)==match.charAt(ls)||lp<pattern.length()&&pattern.charAt(lp)=='.'){
+            return matchCore(ls+1,lp+1,match,pattern);
+        }
+        return false;
+    }
+
+    /**
+     * 第二种递归思路
+     */
+    public boolean matchCore2(int ls,int lp,String match,String pattern){
+        /**
+         * 唯一匹配成功条件
+         */
+        if(ls==match.length()&&lp==pattern.length()){
+            return true;
+        }
+        /**
+         * 字符串未到达末尾，模式串已到达末尾，直接认为匹配失败
+         */
+        if(ls!=match.length()&&lp==pattern.length()){
+            return false;
+        }
+        /**
+         * lp+1位置有*字符
+         */
+        if(lp+1<pattern.length()&&pattern.charAt(lp+1)=='*'){
+            /**
+             * 如果s已经匹配到末尾，则直接跳过字符+*的组合
+             */
+            if(ls==match.length()){
+                return matchCore(ls,lp+2,match,pattern);
+            }
+
+            /**
+             * 如果lp的字符等于ls处的字符，则有两种情况
+             * 1.一种是s后移一位，p位置不变，继续使用当前的pattern比较字符串
+             * 2.另一种pattern后移两位跳过这个字符*结构，s位置不变
+             * 如果lp的字符串不等与ls的字符，那就只有一种情况
+             * 就只能跳过这个【字符*】的pattern，后移两位
+             */
+            return match.charAt(ls)==pattern.charAt(lp)||pattern.charAt(lp)=='.'?matchCore(ls,lp+2,match,pattern) || matchCore(ls+1,lp,match,pattern):matchCore(ls,lp+2,match,pattern);
+        }
+
+        /**
+         * 这里加个校验，如果ls已经到了字符串的末尾，并且当前lp+1的位置也不是*，则可以认为匹配失败了
+         */
+        if(ls==match.length()&&lp!=pattern.length()){
+            return false;
+        }
+
         if(lp<pattern.length()&&ls<match.length()&&pattern.charAt(lp)==match.charAt(ls)||lp<pattern.length()&&pattern.charAt(lp)=='.'){
             return matchCore(ls+1,lp+1,match,pattern);
         }
