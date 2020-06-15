@@ -141,4 +141,57 @@ public class NO19_正则表达式的匹配 {
         }
         return false;
     }
+
+    /**
+     * 动态规划思路
+     * 使用f[i][j]表示字符串前i个字符的串与模式串前j个字符的串是否匹配、
+     * 1.当字符串match末尾字符等于模式串pattern末尾字符
+     * f[i][j]的状态值就等于f[i-1][j-1]
+     * 2.当模式串pattern末尾字符等于【.】,则f[i][j]=f[i-1][j-1]
+     * 3.当模式串pattern末尾字符等于【*】,则分为俩情况
+     *   3.1如果j-1的字符等于【.】或者i的字符等于j-1的字符则可以选择看或者不看
+     *     3.1.1 看, 则f[i][j]=f[i-1][j]
+     *     3.1.2 不看, 则f[i][j]=f[i][j-2]
+     *   3.2 如果不满足3.1的情况则只能选择不看
+     *     f[i][j]=f[i][j-2]
+     * @return
+     */
+    public boolean matchCore3(String s,String p){
+        int n = s.length();
+        int m = p.length();
+        boolean[][] f = new boolean[n+1][m+1];
+
+        f[0][0]=true;
+        for(int i=1;i<n+1;i++){
+            f[i][0]=false;
+        }
+
+        for(int i=0;i<n+1;i++){
+            for(int j=1;j<m+1;j++){
+                if(p.charAt(j-1)!='*'){
+                    /**
+                     * 要求i>=1才行，即match不能是空串，否则这种情况匹配就是false
+                     */
+                    if(i>=1&&(s.charAt(i-1)==p.charAt(j-1)||p.charAt(j-1)=='.')){
+                        f[i][j] |=f[i-1][j-1];
+                    }
+                }else if(j>=2){
+                    if(i>=1&&(p.charAt(j-2)=='.'|| p.charAt(j-2)==s.charAt(i-1))){
+                        /**
+                         * 这里 也要求i>=1才行，否则空串没法比较match有没有重复字符与pattern*前面的字符相同
+                         */
+                        f[i][j] |=f[i-1][j]|f[i][j-2];
+                    }else{
+                        /**
+                         * 这里的情况就是 只能不看【字符*】
+                         */
+                        f[i][j] |=f[i][j-2];
+                    }
+                }
+            }
+
+        }
+
+        return f[n][m];
+    }
 }
