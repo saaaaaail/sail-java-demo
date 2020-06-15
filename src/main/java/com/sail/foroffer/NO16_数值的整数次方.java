@@ -1,5 +1,7 @@
 package com.sail.foroffer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -27,7 +29,7 @@ public class NO16_数值的整数次方 {
             base = 1/base;
         }
 /**
- * 普通解法
+ * 普通解法，时间复杂度不太行
  */
         for (int i=0;i<exponent;i++){
             res = res*base;
@@ -35,9 +37,16 @@ public class NO16_数值的整数次方 {
         System.out.println("res:"+res);
 
         /**
-         * 另一种解法
+         * 另一种解法，递归快速幂
          */
         System.out.println(power(base,exponent));
+
+        /**
+         * 另一种解法，迭代快递幂
+         */
+        base=2.0;
+        exponent=-2;
+        System.out.println(myPow(base,exponent));
     }
 
     public static double power(double base,int exponent){
@@ -51,6 +60,30 @@ public class NO16_数值的整数次方 {
             res = power(base,exponent/2)*power(base,exponent/2);
         }
         return res;
+    }
+
+    public static double myPow(double x, int n) {
+        if(n==0){
+            return 1;
+        }
+        if(n==1){
+            return x;
+        }
+        if(x==1.0||x==0.0){
+            return x;
+        }
+        int tmp = n;
+        double res = 1;
+        while(n!=0){
+
+            System.out.println("n:"+n+",x:"+x+",res:"+res);
+            if((n&1)!=0){
+                res*=x;
+            }
+            x*=x;
+            n=n/2;
+        }
+        return tmp>0? res:1.0/res;
     }
 
 }

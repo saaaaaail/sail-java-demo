@@ -22,47 +22,73 @@ public class NO19_正则表达式的匹配 {
         Scanner sc = new Scanner(System.in);
         String pattern = sc.nextLine();
         String match = sc.nextLine();
-        System.out.println(matchCore(0,0,pattern,match));
+        System.out.println(matchCore(0,0,match,pattern));
     }
 
-    public static boolean matchCore(int pl,int ml,String pattern,String match){
-        if (pl==pattern.length()&&ml==match.length()){
+    /**
+     * 递归思路
+     * @param ls
+     * @param lp
+     * @param match
+     * @param pattern
+     * @return
+     */
+    public static boolean matchCore(int ls,int lp,String match,String pattern){
+        /**
+         * 匹配到ls与lp都到达末尾认为匹配成功
+         */
+        if(ls==match.length()&&lp==pattern.length()){
             return true;
         }
-        if (pl!=pattern.length()&&ml==match.length()||pl==pattern.length()&&ml!=match.length()){
+        /**
+         * 字符串未到达末尾，模式串已到达末尾，直接认为匹配失败
+         */
+        if(ls!=match.length()&&lp==pattern.length()){
             return false;
         }
-        if (pl+1<pattern.length()&&pattern.charAt(pl+1)=='*'){
-            if (pattern.charAt(pl)=='.'){//".*"
+        /**
+         * 考虑下一位字符是 * 的情况，这里面包含字符串到达末尾，模式串未到达末尾的情况
+         * ps: 【.*】匹配任意字符串
+         */
+        if(lp+1<pattern.length()&&pattern.charAt(lp+1)=='*'){
+            if(pattern.charAt(lp)=='.'){
                 /**
-                 * 注意".*"的匹配，要么
-                 * 与match首字母匹配，要么
-                 * 跨过".*"
-                 * 两种情况相或
+                 * 如果模式当前位为. 则允许匹配任意字符串
+                 * 考虑字符串从起始ls位置到字符串末尾的匹配依次与pattern匹配的结果
+                 * match(ls)||match(ls+1)||match(ls+2)||......||match(match.length())
+                 * 只要其中有一个能匹配成功即可
                  */
-                char firstc = match.charAt(ml);
-                int iml=ml;
-                while (match.charAt(iml)==firstc){
-                    iml++;//跳过所有重复的字符
+                boolean result = false;
+                for(int i=ls;i<=match.length();i++){
+                    result = result || matchCore(i,lp+2,match,pattern);
                 }
-                return matchCore(pl+2,ml,pattern,match)
-                        ||matchCore(pl+2,iml,pattern,match);
-            }else {
-                int iml=ml;
-                while (pattern.charAt(pl)==match.charAt(iml)){
-                    iml++;//跳过所有重复的字符
+                return result;
+            }else{
+                /**
+                 * 从字符串ls位置开始寻找连续的与模式串lp位置相同的字符，位置记录到tls中
+                 * 然后依次从连续相同的字符ls到tls选一个位置往后匹配，只要一个成功匹配即可
+                 * match(ls)||match(ls+1)||match(ls+2)||......||match(tls)
+                 * 这里面包含了ls一开始的字符就与模式串不同的情况，这样的ls==tls
+                 *
+                 */
+                int tls = ls;
+                char firstC = pattern.charAt(lp);
+                boolean result = false;
+                while(tls<match.length()&&firstC==match.charAt(tls)){
+                    tls++;
                 }
-                return matchCore(pl+2,iml,pattern,match)
-                        ||matchCore(pl+2,ml,pattern,match);
+                for(int i=ls;i<=tls;i++){
+                    result = result || matchCore(i,lp+2,match,pattern);
+                }
+                return result ;
             }
-
         }
-
-        if (pattern.charAt(pl)==match.charAt(ml)||pattern.charAt(pl)=='.'){
-            return matchCore(pl+1,ml+1,pattern,match);
+        /**
+         * 对于字符串与模式串相同或模式串为.的情况就同时后移一位
+         */
+        if(lp<pattern.length()&&ls<match.length()&&pattern.charAt(lp)==match.charAt(ls)||lp<pattern.length()&&pattern.charAt(lp)=='.'){
+            return matchCore(ls+1,lp+1,match,pattern);
         }
         return false;
-
     }
-
 }
