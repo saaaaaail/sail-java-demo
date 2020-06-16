@@ -8,6 +8,7 @@ package com.sail.foroffer.pojo;
  */
 
 public class ListNode {
-    public int key;
+    public int val;
     public ListNode next;
+    public ListNode(int x) { val = x; }
 }

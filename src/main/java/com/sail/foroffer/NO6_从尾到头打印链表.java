@@ -18,12 +18,12 @@ public class NO6_从尾到头打印链表 {
          * 不能修改的话 栈 或者 递归
          */
         ListNode head = new ListNode();
-        head.key=0;
+        head.val =0;
         head.next = null;
         ListNode p = head;
         for (int i=1;i<10;i++){
             ListNode tmp = new ListNode();
-            tmp.key=i;
+            tmp.val =i;
             tmp.next=null;
             p.next = tmp;
             p=tmp;
@@ -58,7 +58,7 @@ public class NO6_从尾到头打印链表 {
     public static void play2(ListNode head){
         if (head!=null){
             play2(head.next);
-            System.out.print(head.key);
+            System.out.print(head.val);
             System.out.print(" ");
         }
     }
@@ -66,7 +66,7 @@ public class NO6_从尾到头打印链表 {
     public static void printList(ListNode head){
         StringBuilder sb = new StringBuilder();
         while (head!=null){
-            sb.append(head.key).append("->");
+            sb.append(head.val).append("->");
             head = head.next;
         }
         sb.append("null");
