@@ -17,12 +17,12 @@ public class NO6_从尾到头打印链表 {
          * 能修改的话 头插法
          * 不能修改的话 栈 或者 递归
          */
-        ListNode head = new ListNode();
+        ListNode head = new ListNode(0);
         head.val =0;
         head.next = null;
         ListNode p = head;
         for (int i=1;i<10;i++){
-            ListNode tmp = new ListNode();
+            ListNode tmp = new ListNode(0);
             tmp.val =i;
             tmp.next=null;
             p.next = tmp;
