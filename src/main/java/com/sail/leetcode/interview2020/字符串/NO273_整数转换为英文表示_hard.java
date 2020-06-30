@@ -24,7 +24,7 @@ package com.sail.leetcode.interview2020.字符串;
  * 链接：https://leetcode-cn.com/problems/integer-to-english-words
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class NO273_整数转换为英文表示 {
+public class NO273_整数转换为英文表示_hard {
     public static void main(String[] args) {
         String[][] nums=  new String[][]{{"sdfsf","sfsdf"},{"sdfsdf","sdfsdf"}};
         System.out.println(Integer.MAX_VALUE);

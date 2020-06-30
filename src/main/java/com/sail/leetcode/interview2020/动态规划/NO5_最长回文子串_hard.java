@@ -17,7 +17,7 @@ package com.sail.leetcode.interview2020.动态规划;
  * 链接：https://leetcode-cn.com/problems/longest-palindromic-substring
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class NO5_最长回文子串 {
+public class NO5_最长回文子串_hard {
 
     public static void main(String[] args) {
             longestPalindrome2("aba");
@@ -137,6 +137,8 @@ public class NO5_最长回文子串 {
 
     /**
      * 动态规划  175ms 19.41&
+     * 思路记录一下
+     * d[i][j]表示i到j的字符串是不是回文串
      * @param s
      * @return
      */
