@@ -1,5 +1,6 @@
 package com.sail.leetcode.interview2020.动态规划;
 
+import javax.jnlp.IntegrationService;
 import java.util.Arrays;
 
 /**
@@ -59,5 +60,40 @@ public class NO322_零钱兑换 {
         }
         return d[amount];
 
+    }
+
+    public static void main(String[] args) {
+        int i = coinChangeDfs(new int[]{1, 2, 5}, 11);
+        System.out.println(i);
+    }
+
+    /**
+     * 还可以使用dfs 4ms 96.38%
+     */
+    private static int maxResult = Integer.MAX_VALUE;
+    public static int coinChangeDfs(int[] coins, int amount) {
+        Arrays.sort(coins);
+        doCoinChange(coins,coins.length-1,amount,0);
+        return maxResult== Integer.MAX_VALUE?-1:maxResult;
+    }
+
+    public static void doCoinChange(int[] coins,int l,int amount,int cnt){
+        if(l<0){
+            return;
+        }
+
+        int num = amount/coins[l];
+        while(num>=0){
+            int rest = amount-coins[l]*num;
+            if(rest==0){
+                maxResult = Math.min(maxResult,cnt+num);
+                return;
+            }
+            if(cnt+num+1>maxResult){
+                return;
+            }
+            doCoinChange(coins,l-1,rest,cnt+num);
+            num--;
+        }
     }
 }
