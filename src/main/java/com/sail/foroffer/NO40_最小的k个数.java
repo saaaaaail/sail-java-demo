@@ -121,6 +121,8 @@ public class NO40_最小的k个数 {
         }
     }
 
+
+    //这是找大根堆
     public void sink(int[] arr,int k,int len){
         arr[0]=arr[k];
         for(int i=2*k;i<=len;i=i*2){

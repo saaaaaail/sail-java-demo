@@ -31,6 +31,8 @@ public class NO199_二叉树的右视图 {
      *  思路就是 先不停地寻找右孩子，没有了就寻找左孩子
      *  如果新进入一个节点，节点的高度比max都要大，说明这个高度第一次出现，就是右边能看到的第一个节点
      *  更新最高值，加入结果，后面即便回溯再次达到这个值右边也看不见。
+     *
+     *  还有一种思路  层序遍历，记录每层的最后一个节点
      */
     private int max = Integer.MIN_VALUE;
     private List<Integer> result = new ArrayList<>();
