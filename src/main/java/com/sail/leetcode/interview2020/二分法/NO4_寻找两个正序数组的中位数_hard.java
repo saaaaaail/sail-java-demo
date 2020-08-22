@@ -1,4 +1,4 @@
-package com.sail.leetcode.interview2020.数组;
+package com.sail.leetcode.interview2020.二分法;
 
 /**
  * 给定两个大小为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。
@@ -35,6 +35,66 @@ public class NO4_寻找两个正序数组的中位数_hard {
 //                new int[]{1,2},
 //                new int[]{-1,3}
 //        ));
+    }
+
+    /**
+     * 二分法 同一思路第二种递归写法 3ms 61.81%
+     * 思路更清晰
+     *
+     */
+    public double findMedianSortedArrays1(int[] nums1, int[] nums2) {
+        int size1 = nums1.length;
+        int size2 = nums2.length;
+        //这里就不区分奇数偶数，直接分左右来求
+        /**
+         * 这是求中位左边的那个数的k
+         */
+        int left = (size1+size2+1)/2;
+        /**
+         * 这是中位右边那个数的k
+         */
+        int right = (size1+size2+2)/2;
+        /**
+         * 求左边的k 与 右边的k 求均值，可能是一样也可能不一样
+         */
+        return (findK(nums1,0,nums2,0,left)+findK(nums1,0,nums2,0,right))/2;
+    }
+
+    public double findK(int[] nums1,int l1,int[] nums2,int l2,int k){
+        /**
+         * 如果左边数组的索引到头了，则说明一个数组nums1遍历完了，直接返回nums2的第k个数
+         */
+        if(l1>=nums1.length){
+            return nums2[l2+k-1];
+        }
+        /**
+         * 说明nums2遍历完了，直接返回nums1的第k个数
+         */
+        if(l2>=nums2.length){
+            return nums1[l1+k-1];
+        }
+        /**
+         * 如果k等于1，说明下一个数就是第k个数，nums1和nums2起始位置找小的返回
+         */
+        if(k==1){
+            return Math.min(nums1[l1],nums2[l2]);
+        }
+        /**
+         * 求nums1的第k/2个数的索引，如果溢出了就返回末尾有效的那个索引
+         */
+        int kIdx1 = Math.min(l1+k/2-1,nums1.length-1);
+        /**
+         * 求nums2的第k/2个数的索引，如果溢出了就返回末尾有效的那个索引
+         */
+        int kIdx2 = Math.min(l2+k/2-1,nums2.length-1);
+        /**
+         * 比较两个数组k/2索引处的值的大小，如果nums2要小，说明nums2前k/2的数都可以剔除掉，肯定不是中位
+         */
+        if(nums1[kIdx1]>nums2[kIdx2]){
+            return findK(nums1,l1,nums2,kIdx2+1,k-(kIdx2-l2+1));
+        }else{
+            return findK(nums1,kIdx1+1,nums2,l2,k-(kIdx1-l1+1));
+        }
     }
 
     /**

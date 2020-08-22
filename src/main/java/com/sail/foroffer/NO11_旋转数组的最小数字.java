@@ -11,19 +11,25 @@ import java.util.Scanner;
  */
 
 public class NO11_旋转数组的最小数字 {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String[] strs = sc.nextLine().split(",");
-        int[] nums = new int[strs.length];
-        for (int i=0;i<strs.length;i++){
-            nums[i]=Integer.parseInt(strs[i]);
-        }
-        System.out.println(min(nums));
-    }
 
-    public static int min(int[] nums){
+
+    /**
+     * 0ms 100%
+     * 思路是二分法，判断哪边是非递增的，那么最小值就在哪边
+     * 注意边界需要一直包含mid，边界选择为左闭右闭
+     * 所以当区间里面还剩两个元素的时候就要判断跳出了，因为区间不会再缩减了
+     * 这时候直接打印输出nums[j]，为什么是j呢
+     * 因为一直选择的区间是逆序的区间
+     * 最后剩两个元素的时候依然是逆序的
+     * @param nums
+     * @return
+     */
+    public int minArray(int[] nums) {
         int i=0;
         int j=nums.length-1;
+        if(i==j){
+            return nums[i];
+        }
         if (nums[i]<nums[j]){
             return nums[i];
         }
@@ -33,9 +39,13 @@ public class NO11_旋转数组的最小数字 {
              * 若i与mid与j相同的时候，无法判断mid属于前面还是后面的序列，则直接使用顺序查找
              */
             if (nums[i]==nums[mid]&&nums[mid]==nums[j]){
+
                 int k=i;
-                while (nums[k]<nums[k+1]){
+                while (nums[k]<=nums[k+1]){
                     k++;
+                    if(k+1>j){
+                        return nums[k];
+                    }
                 }
                 return nums[k+1];
             }
