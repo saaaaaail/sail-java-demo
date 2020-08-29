@@ -1,4 +1,4 @@
-package com.sail.leetcode.面试题;
+package com.sail.leetcode.笔试题;
 
 /**
  * 合唱队N名学生，站成一排从左到右编号为1到N，其中编号为i的学生身高为Hi，现在将这些学生分成若干组(同一组学生编号连续)

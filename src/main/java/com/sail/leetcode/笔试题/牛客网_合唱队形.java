@@ -1,4 +1,4 @@
-package com.sail.leetcode.面试题;
+package com.sail.leetcode.笔试题;
 
 import java.util.Scanner;
 
