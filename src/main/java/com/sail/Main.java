@@ -8,20 +8,14 @@ import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//class模版在此
-
 /**
  *@program: ${PROJECT_NAME}
  *@description: ${description}
- *@author: sail
+ *@author: yangfan
  *@create: ${YEAR}/${MONTH}/${DAY} ${HOUR}:${MINUTE}
  */
 
 public class Main {
-
-    public ReentrantLock test(){
-        return new ReentrantLock();
-    }
 
 
 
