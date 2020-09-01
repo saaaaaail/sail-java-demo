@@ -41,6 +41,11 @@ import java.util.LinkedList;
  */
 public class NO1249_移除无效括号 {
 
+    public static void main(String[] args) {
+        Integer a3 = new Integer(60);
+        Integer b3 = 60;
+        System.out.println("3:="+(a3 == b3));
+    }
 
     /**
      * 思路 用递归超时  鉴于结果只要一个  用stack也可以实现，47ms 16%

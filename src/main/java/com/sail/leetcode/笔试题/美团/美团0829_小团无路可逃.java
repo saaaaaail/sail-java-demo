@@ -1,4 +1,4 @@
-package com.sail.leetcode.笔试题;
+package com.sail.leetcode.笔试题.美团;
 
 /**
  * @program: sail-java-demo
